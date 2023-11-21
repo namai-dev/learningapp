@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} {% block content %} {% load static %}
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-6">
@@ -24,11 +24,11 @@
       >
     </div>
     <div class="col-md-6">
-      <!-- Add an image or illustration to showcase your app -->
+      <!-- Add an image from the static directory with the img-fluid class -->
       <img
-        src="path/to/your/image.jpg"
-        class="img-fluid"
+        src="{% static 'photo.jpg' %}"
         alt="Study App Illustration"
+        class="img-fluid"
       />
     </div>
   </div>
