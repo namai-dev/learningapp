@@ -1,10 +1,21 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from youtube_search import YoutubeSearch
-# Create your views here.
-class Home(APIView):
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.models import User
+from .serializer import UserRegistrationSerializer
+from rest_framework import serializers
+from django.contrib.auth.mixins import LoginRequiredMixin
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
+
+
+
+from rest_framework import generics
+class Home(LoginRequiredMixin, APIView):
+    login_url="/login/"
     def get(self, request):
         return render(template_name="dashboard.html", request=request)
     
@@ -26,8 +37,8 @@ class Home(APIView):
 
                 video.append(video_data)
             
-            return render(template_name="dashboard.html", request=request, context={"videos":video, "topic":topic})
-        return render(template_name="dashboard.html", request=request, context={"topic":topic})
+            return render(template_name="dashboard.html", request=request, context={"videos":video, "topic":topic, "user":request.user})
+        return render(template_name="dashboard.html", request=request, context={"topic":topic, "user":request.user})
     
 
 
@@ -39,8 +50,68 @@ class  Landingpage(APIView):
 class LoginView(APIView):
     def get(self, request):
         return render(template_name="login.html", request=request)
+    
+    authentication_classes = [SessionAuthentication]
+    # permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        # Assuming your login form sends 'username' and 'password' in the POST data
+        username = request.data.get('email')
+        password = request.data.get('password')
+        print(request.POST)
+        print(username)
+        print(password)
+
+        # Authenticate the user
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            # Log the user in
+            login(request, user)
+            return Response({'message': 'Login successful'})
+        else:
+            return Response({'message': 'Invalid credentials'}, status=401)
 
 
-class SignUpView(APIView):
+class SignUpView(generics.CreateAPIView):
+    serializer_class = UserRegistrationSerializer
+
     def get(self, request):
-        return render(template_name="signup.html", request=request)
+        return render(request, template_name="signup.html")
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+       
+        if serializer.is_valid():
+           try:
+            
+                self.perform_create(serializer)
+                headers = self.get_success_headers(serializer.data)
+                
+                return redirect("landing")
+           except serializers.ValidationError as e:
+            # Handle any specific exceptions you want to catch
+                  print(e)
+                  return render(request, template_name="signup.html", context={"error": "Registration failed. Please try again."})
+        else:
+            error = serializer.errors
+            return render(request, template_name="signup.html", context={"error": error})
+
+
+class APILogoutView(APIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        # Log the user out
+        logout(request)
+        return render(request=request, template_name="landingpage.html")
+        
+        
+       
+
+        
+    
+
+
+   

@@ -1,17 +1,68 @@
 {% extends 'base.html'%} {%block content%}
 
-<form class="container mt-3">
+<form class="container mt-3 p-4" method="post" action="{% url 'signup'%}">
+  {% if error %}
+  <p>the {{error}}</p>
+  <!-- <p>There is an error:</p>
+  <ul>
+    {% for error in form.errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+  </ul> -->
+  {% endif %}
   <!-- Email input -->
   <div class="form-outline mb-4">
-    <input type="email" id="form2Example1" class="form-control" />
+    <input
+      type="text"
+      id="form2Example1"
+      name="first_name"
+      class="form-control"
+      required
+    />
+    <label class="form-label" for="first_name">first_name</label>
+  </div>
+  <div class="form-outline mb-4">
+    <input
+      type="text"
+      id="form2Example1"
+      name="last_name"
+      class="form-control"
+      required
+    />
+    <label class="form-label" for="last_name">last_name</label>
+  </div>
+  <div class="form-outline mb-4">
+    <input
+      type="email"
+      id="form2Example1"
+      name="email"
+      class="form-control"
+      required
+    />
     <label class="form-label" for="form2Example1">Email address</label>
   </div>
 
   <!-- Password input -->
   <div class="form-outline mb-4">
-    <input type="password" id="form2Example2" class="form-control" />
+    <input
+      type="password"
+      id="form2Example2"
+      name="password"
+      class="form-control"
+      required
+    />
     <label class="form-label" for="form2Example2">Password</label>
   </div>
+  <!-- <div class="form-outline mb-4">
+    <input
+      type="password"
+      id="form2Example2"
+      name="password2"
+      class="form-control"
+      required
+    />
+    <label class="form-label" for="form2Example2">Confirm Password</label>
+  </div> -->
 
   <!-- 2 column grid layout for inline styling -->
   <div class="row mb-4">
@@ -30,7 +81,7 @@
   </div>
 
   <!-- Submit button -->
-  <button type="button" class="btn btn-primary btn-block mb-4">Sign up</button>
+  <button type="submit" class="btn btn-primary btn-block mb-4">Sign up</button>
 
   <!-- Register buttons -->
   <div class="text-center">

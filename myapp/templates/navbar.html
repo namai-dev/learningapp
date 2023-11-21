@@ -39,6 +39,13 @@
           </ul>
         </li>
       </ul>
+      {% if user.is_authenticated %}
+      <div>
+        <a href="{% url 'logout' %}" class="btn btn-primary btn-lg mt-3"
+          >Logout</a
+        >
+      </div>
+      {% endif %}
       <form class="d-flex">
         <input
           class="form-control me-2"
