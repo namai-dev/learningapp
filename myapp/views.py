@@ -34,4 +34,13 @@ class Home(APIView):
 class  Landingpage(APIView):
     def get(self, request):
         return render(template_name="landingpage.html", request=request)
+    
 
+class LoginView(APIView):
+    def get(self, request):
+        return render(template_name="login.html", request=request)
+
+
+class SignUpView(APIView):
+    def get(self, request):
+        return render(template_name="signup.html", request=request)
