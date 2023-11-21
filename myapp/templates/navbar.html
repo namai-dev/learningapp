@@ -39,13 +39,7 @@
           </ul>
         </li>
       </ul>
-      {% if user.is_authenticated %}
-      <div>
-        <a href="{% url 'logout' %}" class="btn btn-primary btn-lg mt-3"
-          >Logout</a
-        >
-      </div>
-      {% endif %}
+
       <form class="d-flex">
         <input
           class="form-control me-2"
@@ -55,6 +49,15 @@
         />
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
+
+      {% if user.is_authenticated %}
+      <div class="d-flex row">
+        <p class="">{{ user.email }}</p>
+        <a href="{% url 'logout' %}" class="btn btn-primary btn-lg mt-3"
+          >Logout</a
+        >
+      </div>
+      {% endif %}
     </div>
   </div>
 </nav>

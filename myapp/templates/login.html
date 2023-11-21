@@ -1,6 +1,9 @@
 {% extends 'base.html'%} {%block content%}
 
 <form class="container mt-3 p-4" method="post" action="{%url 'login'%}">
+  {% if error %}
+  <p>{{error}}</p>
+  {%endif%}
   <!-- Email input -->
   <div class="form-outline mb-4">
     <input type="email" id="form2Example1" name="email" class="form-control" />
@@ -47,7 +50,7 @@
 
   <!-- Register buttons -->
   <div class="text-center">
-    <p>Not a member? <a href="#!">Register</a></p>
+    <p>Not a member? <a href="{%url 'signup'%}">Register</a></p>
     <p>or sign up with:</p>
     <button type="button" class="btn btn-link btn-floating mx-1">
       <i class="fab fa-facebook-f"></i>

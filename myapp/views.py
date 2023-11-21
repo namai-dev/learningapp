@@ -68,9 +68,9 @@ class LoginView(APIView):
         if user is not None:
             # Log the user in
             login(request, user)
-            return Response({'message': 'Login successful'})
+            return render(template_name="dashboard.html", request=request)
         else:
-            return Response({'message': 'Invalid credentials'}, status=401)
+            return render(template_name="login.html", request=request, context={"error":"email or password invalid"})
 
 
 class SignUpView(generics.CreateAPIView):
