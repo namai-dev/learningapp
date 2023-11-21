@@ -1,13 +1,4 @@
-{% extends 'base.html'%} {% block content%} {% comment %}
-<p>This is my landing page</p>
-<button
-  class="btn btn-outline-success"
-  onclick="window.location.href='{% url 'search' %}'"
->
-  Explore dashboard
-</button>
-{% endcomment %}
-
+{% extends 'base.html' %} {% block content %}
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-6">
@@ -42,18 +33,47 @@
     </div>
   </div>
 
-  <!-- Card with other projects or features -->
-  <div class="card mt-5">
-    <div class="card-header">Other Projects and Features</div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Project A - Lorem ipsum dolor sit amet</li>
-      <li class="list-group-item">Project B - Consectetur adipiscing elit</li>
-      <li class="list-group-item">
-        Project C - Sed do eiusmod tempor incididunt ut labore et dolore magna
-        aliqua
-      </li>
-    </ul>
+  <!-- Cards with other projects or features -->
+  <div class="row mt-5">
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">FarmLink</h5>
+          <p class="card-text">
+            A project for farming and agriculture systems. Explore innovative
+            solutions to enhance farming practices and improve agricultural
+            systems.
+          </p>
+          <a href="#" class="btn btn-secondary">Learn More</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Sentimental Analysis</h5>
+          <p class="card-text">
+            Dive into the world of sentiment analysis and understand how
+            machines can analyze and interpret human emotions expressed in text.
+          </p>
+          <a href="#" class="btn btn-secondary">Learn More</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Car Park Reinforcement Learning</h5>
+          <p class="card-text">
+            Explore the application of reinforcement learning in optimizing and
+            managing car park systems for improved efficiency and convenience.
+          </p>
+          <a href="#" class="btn btn-secondary">Learn More</a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
-{%endblock%}
+{% endblock %}
