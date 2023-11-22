@@ -1,6 +1,7 @@
 {%extends 'base.html' %} {%block content %}
 
 <form class="p-4" method="post" action="{% url 'search'%}">
+  {%csrf_token %}
   <div class="row">
     <div class="col">
       <input

@@ -3,13 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %} {%
-    csrf_token %}
+    {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %} {% load
+    static %}
     <title>Learn</title>
   </head>
   <body>
-    {% load static %} {% include 'navbar.html' %} {%block content%} {%csrf_token
-    %} {%endblock%}
+    {% include 'navbar.html' %} {%block content%} {%csrf_token %} {%endblock%}
   </body>
 
   <footer class="bg-dark text-white py-4">
