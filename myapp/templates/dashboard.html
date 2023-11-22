@@ -51,7 +51,7 @@
   <h2 class="mt-3">Search Results:</h2>
   <div class="row">
     {% for video in videos %}
-    <div class="col-md-4 mb-4">
+    <div class="col-md-4 mb-4" id="videoContainer">
       <div class="card">
         {% if video.thumbnail %}
         <img
@@ -62,16 +62,33 @@
         {% endif %}
         <div class="card-body">
           <h5 class="card-title">{{ video.title }}</h5>
-          <p class="card-text">
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#videoModal{{ forloop.counter }}"
-            >
-              Play Video
-            </button>
-          </p>
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#videoModal{{ forloop.counter }}"
+          >
+            Play Video
+          </button>
+
+          {% comment %}
+          <button
+            data-title="{{ video.title }}"
+            data-thumbnail="{{ video.thumbnail }}"
+            data-videoid="{{video.video_id}}"
+          >
+            Save
+          </button>
+          {% endcomment %}
+          <button
+            type="button"
+            class="btn btn-primary save-btn"
+            onclick="handleSave('{{ video.title }}', '{{ video.thumbnail }}', '{{ video.video_id }}')"
+          >
+            Save
+          </button>
+          <button type="button" class="btn btn-primary">Download</button>
         </div>
       </div>
 
@@ -112,14 +129,45 @@
       </div>
 
       <script>
-        // JavaScript to stop the video when the modal is closed
-        var videoModal{{ forloop.counter }} = document.getElementById('videoModal{{ forloop.counter }}');
-        videoModal{{ forloop.counter }}.addEventListener('hidden.bs.modal', function () {
-          var iframe{{ forloop.counter }} = videoModal{{ forloop.counter }}.querySelector('iframe');
-          var src{{ forloop.counter }} = iframe{{ forloop.counter }}.src;
-          iframe{{ forloop.counter }}.src = '';
-          iframe{{ forloop.counter }}.src = src{{ forloop.counter }};
-        });
+                                                                  // JavaScript to stop the video when the modal is closed
+                                                                  var videoModal{{ forloop.counter }} = document.getElementById('videoModal{{ forloop.counter }}');
+                                                                  videoModal{{ forloop.counter }}.addEventListener('hidden.bs.modal', function () {
+                                                                    var iframe{{ forloop.counter }} = videoModal{{ forloop.counter }}.querySelector('iframe');
+                                                                    var src{{ forloop.counter }} = iframe{{ forloop.counter }}.src;
+                                                                    iframe{{ forloop.counter }}.src = '';
+                                                                    iframe{{ forloop.counter }}.src = src{{ forloop.counter }};
+                                                                  });
+
+                                                                  {% comment %} const save_video =  {% endcomment %}
+
+                        function handleSave(title, thumbnail, videoId) {
+            // Get CSRF token from the cookie
+            var csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)csrftoken\s*=\s*([^;]*).*$)|^.*$/, "$1");
+
+            // Make an AJAX request to your server with fetch
+            fetch('/save/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrfToken,
+                },
+                body: 'title=' + encodeURIComponent(title) + '&thumbnail=' + encodeURIComponent(thumbnail) + '&video_id=' + encodeURIComponent(videoId),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // assuming your server returns JSON
+            })
+            .then(data => {
+                // Handle success, if needed
+                console.log(data);
+            })
+            .catch(error => {
+                // Handle error, if needed
+                console.error('Error:', error.message);
+            });
+        }
       </script>
     </div>
     {% endfor %}

@@ -1,6 +1,6 @@
 # serializers.py
 from rest_framework import serializers
-from .models import User
+from .models import User, Video
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -33,3 +33,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             last_name=validated_data.get('last_name', '')
         )
         return user
+    
+
+class VideoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Video
+        fields = ['title', 'thumbnail', 'video_id']

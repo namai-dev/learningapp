@@ -5,11 +5,13 @@ from rest_framework import status
 from youtube_search import YoutubeSearch
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
-from .serializer import UserRegistrationSerializer
+from .serializer import UserRegistrationSerializer, VideoSerializer
 from rest_framework import serializers
 from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
+from .models import User
+
 
 
 
@@ -106,6 +108,27 @@ class APILogoutView(APIView):
         # Log the user out
         logout(request)
         return render(request=request, template_name="landingpage.html")
+
+
+class HandleVideo(APIView):
+    def post(self, request):
+        video_data = VideoSerializer(data=request.data)
+
+        if video_data.is_valid():
+            video_data.save(user = request.user)
+            return Response({'message': 'Video saved successfully'})
+        else:
+            print("not valid")
+            print(video_data.errors)
+            return Response({'message': 'Invalid data provided'}, status=400)
+        
+class userview(APIView):
+    def get(self, request):
+        users = User.objects.all()
+        data = UserRegistrationSerializer(users, many=True)
+        return Response(data.data)
+
+
         
         
        

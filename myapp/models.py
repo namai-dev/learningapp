@@ -14,6 +14,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField( max_length=30, blank=True)
     date_joined = models.DateTimeField( auto_now_add=True)
     is_active = models.BooleanField( default=True)
+    is_staff = models.BooleanField(default=False)
     # avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
 
     objects = UserManager()
@@ -43,3 +44,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         Sends an email to this User.
         '''
         send_mail(subject, message, from_email, [self.email], **kwargs)
+
+
+class Video(models.Model):
+    title = models.CharField(max_length=255)
+    video_id = models.CharField(max_length=255)
+    thumbnail = models.URLField(max_length=255)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
