@@ -12,6 +12,7 @@ urlpatterns = [
     path("signup/", view=views.SignUpView.as_view(), name="signup"),
     path("logout/", views.APILogoutView.as_view(), name="logout"),
     path("save/", view=views.HandleVideo.as_view(), name="save_video" ),
-    path("users/", views.userview.as_view(), name="userview")
+    path("users/", views.userview.as_view(), name="userview"),
+    path("uservideos/", views.userVideos.as_view(), name="user_videos")
     
 ]
