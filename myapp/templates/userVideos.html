@@ -1,1 +1,24 @@
-{%extends 'base.html'%}
+{%extends 'base.html'%} {%block content%}
+
+<div class="container mt-5">
+  <h2>Your Videos</h2>
+  <div class="row mt-3">
+    {% for video in user_videos %}
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <img
+          src="{{ video.thumbnail }}"
+          class="card-img-top"
+          alt="{{ video.title }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ video.title }}</h5>
+          <p class="card-text">Video ID: {{ video.video_id }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {%endblock%}
+</div>

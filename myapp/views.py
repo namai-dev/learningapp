@@ -127,6 +127,12 @@ class userview(APIView):
         users = User.objects.all()
         data = UserRegistrationSerializer(users, many=True)
         return Response(data.data)
+    
+
+class userVideos(APIView):
+
+    def get(self, request):
+        pass
 
 
         
