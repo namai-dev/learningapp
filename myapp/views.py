@@ -135,7 +135,7 @@ class userVideos(APIView):
         videos = Video.objects.filter(user= request.user)
         data = VideoSerializer(videos, many=True)
         
-        return render(template_name="userVideos.html")
+        return render(template_name="userVideos.html", context={"videos":data})
 
 
         
