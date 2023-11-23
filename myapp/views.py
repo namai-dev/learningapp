@@ -10,7 +10,7 @@ from rest_framework import serializers
 from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
-from .models import User
+from .models import User, Video
 
 
 
@@ -132,7 +132,10 @@ class userview(APIView):
 class userVideos(APIView):
 
     def get(self, request):
-        pass
+        videos = Video.objects.filter(user= request.user)
+        data = VideoSerializer(videos, many=True)
+        
+        return render(template_name="userVideos.html")
 
 
         
